@@ -1,5 +1,5 @@
 import { StyleSheet, Text, TextInput, View } from "react-native";
-import GlobalStyles from "../constant/Style";
+import GlobalStyles from "../constants/Styles";
 
 function Input({ label, style, invalid, textInputConfig }) {
   let inputStyles = [styles.input]; // this will create an array with the styles for the input field

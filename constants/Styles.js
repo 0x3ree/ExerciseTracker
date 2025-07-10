@@ -1,4 +1,4 @@
-export const GlobalStyles = {
+const GlobalStyles = {
   color: {
     primary50: "#e4d9fd",
     primary100: "#c6affc",
@@ -14,3 +14,5 @@ export const GlobalStyles = {
     gray700: "#221c30",
   },
 };
+
+export default GlobalStyles;

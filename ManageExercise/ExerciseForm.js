@@ -1,6 +1,8 @@
+import { useState } from "react";
 import Input from "./Input";
 import { View, Text, StyleSheet } from "react-native";
-import Button from "../components/Exercise/ExerciseDetails/UI/Button";
+import Button from "../components/UI/Button";
+import GlobalStyles from "../constants/Styles";
 
 function ExerciseForm({
   submitButtonLabel,
@@ -49,8 +51,8 @@ function ExerciseForm({
 
     // VALIDATION CHECKS
     // in here we would validate the input values before calling the onSubmit function with the helper constants
-    const repsIsValid = !isNaN(exerciseData.reps) && expenseData.reps > 0; // this will check if the reps is a number and greater than 0
-    const setsIsValid = !isNaN(exerciseData.sets) && expenseData.sets > 0; // this will check if the date is a valid date object
+    const repsIsValid = !isNaN(exerciseData.reps) && exerciseData.reps > 0; // this will check if the reps is a number and greater than 0
+    const setsIsValid = !isNaN(exerciseData.sets) && exerciseData.sets > 0; // this will check if the date is a valid date object
     const descriptionIsValid = exerciseData.description.trim().length > 0; // this will check if the description is not empty(where by after the .trim removes excess spaces before and after the string and the .length checks the length of the string is =0)
 
     if (!repsIsValid || !setsIsValid || !descriptionIsValid) {
@@ -79,7 +81,7 @@ function ExerciseForm({
       <View style={styles.inputRow}>
         <Input
           style={styles.rowInput}
-          label="SETS"
+          label="REPS"
           invalid={!inputs.reps.isValid}
           textInputConfig={{
             keyboardType: "number-pad", // this will make the keyboard show a number pad when the user taps on the input field
@@ -94,7 +96,7 @@ function ExerciseForm({
         />
         <Input
           style={styles.rowInput}
-          label="REPS"
+          label="SETS"
           invalid={!inputs.sets.isValid}
           textInputConfig={{
             keyboardType: "number-pad",

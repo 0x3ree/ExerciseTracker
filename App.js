@@ -11,13 +11,13 @@ const Stack = createNativeStackNavigator();
 export default function App() {
   return (
     <>
-      <StatusBar style="light" />
+      <StatusBar style="black" />
       <NavigationContainer>
         <Stack.Navigator
           screenOptions={{
-            headerStyle: { backgroundColor: "#000" },
-            headerTintColor: "white",
-            contentStyle: { backgroundColor: "#fff" },
+            headerStyle: { backgroundColor: "#fff" },
+            headerTintColor: "black",
+            contentStyle: { backgroundColor: "#000" },
           }}
         >
           <Stack.Screen name="Category" component={DaysScreen} />
