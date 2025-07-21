@@ -1,5 +1,5 @@
 import { FlatList } from "react-native";
-import Daystiles from "../components/Exercise/ExerciseDetails/Daystiles";
+import Daystiles from "../components/ExerciseDetails/Daystiles";
 import { DAYS } from "../data/dummy-data";
 import { useNavigation } from "@react-navigation/native";
 function DaysScreen() {

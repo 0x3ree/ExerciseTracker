@@ -2,7 +2,7 @@ import { useState } from "react";
 import Input from "./Input";
 import { View, Text, StyleSheet } from "react-native";
 import Button from "../components/UI/Button";
-import GlobalStyles from "../constants/Styles";
+import { GlobalStyles } from "../constants/Styles";
 
 function ExerciseForm({
   submitButtonLabel,
@@ -20,7 +20,7 @@ function ExerciseForm({
     sets: {
       value: defaultValues ? defaultValues.sets.toString() : "",
       isValid: true,
-    }, // we use the getFormattedDate() method to convert the date to a string so that it can be displayed in the input field
+    },
     description: {
       value: defaultValues ? defaultValues.description : "",
       isValid: true,
@@ -71,7 +71,7 @@ function ExerciseForm({
       return;
     } // if any of the input values are invalid, we will not call the onSubmit function and just return
 
-    onSubmit(exerciseData); // this will call the onSubmit function and pass the expenseData object to it
+    onSubmit(exerciseData); // this will call the onSubmit function and pass the exerciseData object to it
   }
   const formIsInvalid =
     !inputs.reps.isValid || !inputs.sets.isValid || !inputs.description.isValid;
@@ -85,7 +85,7 @@ function ExerciseForm({
           invalid={!inputs.reps.isValid}
           textInputConfig={{
             keyboardType: "number-pad", // this will make the keyboard show a number pad when the user taps on the input field
-            maxLength: 5,
+            maxLength: 3,
             // we use the.bind() method to bind the inputChangeHandler function to the input field and pass the inputIdentifier as "amount" and the enteredValue as the value of the input field
             //NOTE: THE .BIND() ACCEPTS THE THIS KEYWORD AS THE FIRST ARGUMENT AND THE SECOND ARGUMENT IS THE VALUE THAT WE WANT TO PASS TO THE FUNCTION. and as for the entered value it's provided and added by react native automatically
             onChangeText: inputChangeHandler.bind(this, "reps"), // this will bind the inputChangeHandler function to the input field and pass the inputIdentifier as "amount" and the enteredValue as the value of the input field
@@ -100,8 +100,8 @@ function ExerciseForm({
           invalid={!inputs.sets.isValid}
           textInputConfig={{
             keyboardType: "number-pad",
-            maxLength: 5,
-            onChangeText: inputChangeHandler.bind(this, "sets"), // this will bind the inputChangeHandler function to the input field and pass the inputIdentifier as "date" and the enteredValue as the value of the input field
+            maxLength: 3,
+            onChangeText: inputChangeHandler.bind(this, "sets"), // this will bind the inputChangeHandler function to the input field and pass the inputIdentifier as "sets" and the enteredValue as the value of the input field
             value: inputs.sets.value,
             // this will be called when the text in the input field changes
           }}
@@ -111,7 +111,7 @@ function ExerciseForm({
         label="DESCRIPTION"
         invalid={!inputs.description.isValid} // this will be used to show an error message if the description input field is invalid
         textInputConfig={{
-          multiline: true,
+          // multiline: true,
           // autoCapitalize: "none",
           //autoCorrect: false,
           onChangeText: inputChangeHandler.bind(this, "description"),
@@ -120,11 +120,11 @@ function ExerciseForm({
       />
       {formIsInvalid && (
         <Text style={styles.errorText}>
-          Invalid Input - Please Check Your Entered Data!{" "}
+          Invalid Input - Please Check Your Entered Data!
         </Text>
       )}
       <View style={styles.buttons}>
-        <Button style={styles.button} mode="flat" onPress={onCancel}>
+        <Button style={styles.button} onPress={onCancel}>
           Cancel
         </Button>
         <Button style={styles.button} onPress={submitHandler}>
