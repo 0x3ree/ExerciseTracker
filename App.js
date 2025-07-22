@@ -26,14 +26,16 @@ export default function App() {
             <Stack.Screen
               name="ExerciseScreen"
               component={ExerciseScreen}
-              options={({ navigation }) => ({
-                headerRight: ({ tintcolor }) => (
+              options={({ navigation, route }) => ({
+                headerRight: ({ tintColor }) => (
                   <IconButton
                     icon="add"
-                    color={tintcolor}
+                    color={tintColor}
                     size={24}
                     onPress={() => {
-                      navigation.navigate("ManageExerciseScreen");
+                      navigation.navigate("ManageExerciseScreen", {
+                        dayId: route.params.dayId,
+                      });
                     }}
                   />
                 ),

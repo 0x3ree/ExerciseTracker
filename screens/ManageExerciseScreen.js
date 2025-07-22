@@ -1,11 +1,16 @@
-import { useContext, useLayoutEffect } from "react";
+import { useState, useContext, useLayoutEffect } from "react";
 import { View, StyleSheet } from "react-native";
 import ExerciseForm from "../ManageExercise/ExerciseForm";
 import { ExercisesContext } from "../store/exercises-context";
 import { GlobalStyles } from "../constants/Styles";
 import { Ionicons } from "@expo/vector-icons";
-
+import { storeExercise, updateExercise, deleteExercise } from "../store/http";
+import ErrorOverlay from "../components/UI/ErrorOverlay";
+import LoadingOverlay from "../components/UI/LoadingOverlay";
 function ManageExerciseScreen({ route, navigation }) {
+  const [isSubmitting, setIsSubmitting] = useState(false);
+  const [error, setError] = useState();
+  const { dayId } = route.params || {};
   const editedExerciseId = route.params?.exerciseId;
   const exerciseCtx = useContext(ExercisesContext);
   const isEditing = !!editedExerciseId;
@@ -23,26 +28,48 @@ function ManageExerciseScreen({ route, navigation }) {
     });
   }, [navigation, isEditing]);
 
-  function deleteExerciseHandler() {
-    exerciseCtx.deleteExercise(editedExerciseId);
-    navigation.goBack();
+  async function deleteExerciseHandler() {
+    setIsSubmitting(true);
+    try {
+      await deleteExercise(editedExerciseId);
+      exerciseCtx.deleteExercise(editedExerciseId);
+      navigation.goBack();
+    } catch (error) {
+      setError("Could not delete exercise - Please try again!");
+      setIsSubmitting(false);
+    }
   }
 
   function cancelHandler() {
     navigation.goBack();
   }
 
-  function confirmHandler(exerciseData) {
-    if (isEditing) {
-      exerciseCtx.updateExercise(editedExerciseId, exerciseData);
-    } else {
-      exerciseCtx.addExercise({ ...exerciseData, id: id });
+  async function confirmHandler(exerciseData) {
+    setIsSubmitting(true);
+    try {
+      if (isEditing) {
+        const updatedData = { ...exerciseData, dayId: selectedExercise.dayId };
+        exerciseCtx.updateExercise(editedExerciseId, updatedData);
+        await updateExercise(editedExerciseId, updatedData);
+      } else {
+        const id = await storeExercise({ ...exerciseData, dayId });
+        exerciseCtx.addExercise({ ...exerciseData, id: id, dayId });
+      }
+      navigation.goBack();
+    } catch (error) {
+      setError("Could not save data - please try again!");
+      setIsSubmitting(false);
     }
-    navigation.goBack();
+  }
+  if (error && !isSubmitting) {
+    return <ErrorOverlay message={error} />;
+  }
+  if (isSubmitting) {
+    return <LoadingOverlay />;
   }
 
   return (
-    <View>
+    <View style={styles.container}>
       <ExerciseForm
         submitButtonLabel={isEditing ? "update" : "add"}
         onSubmit={confirmHandler}
@@ -69,7 +96,7 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
     padding: 24,
-    backgroundColor: GlobalStyles.color.primary800,
+    backgroundColor: GlobalStyles.color.primary0,
   },
   deleteContainer: {
     marginTop: 16,

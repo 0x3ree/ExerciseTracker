@@ -1,5 +1,5 @@
 import { createContext, useReducer } from "react";
-import { DUMMY_EXERCISES } from "../data/dummy-data";
+//import { DUMMY_EXERCISES } from "../data/dummy-data";
 
 export const ExercisesContext = createContext({
   exercise: [],
@@ -25,6 +25,7 @@ function exerciseReducer(state, action) {
       const updateableExerciseIndex = state.findIndex(
         (exercise) => exercise.id === action.payload.id
       ); // this will find the index of the exercise that we want to update. there by getting the index instead of the item itself to again update everything immutably thereafter.
+
       const updateableExercise = state[updateableExerciseIndex]; // this will get the exercise that we want to update
       const updatedItem = { ...updateableExercise, ...action.payload.data }; // this will create a new exercise object with the updated values, we are using the spread operator to copy the current exercise and then we are using the spread operator again to copy and merge the new values from the action.payload.data object which overrides the old state
       const updatedExercise = [...state]; // this will create a new array with the updated exercise
@@ -46,6 +47,7 @@ function ExercisesContextProvider({ children }) {
   // this will be used to add a new exercise to the exercise array, this function will take the exerciseData object and will dispatch the action to add the new expense to the exercise array
   // the Action is the value passed to the dispatch function, it is an object that contains the type of action to be performed and the payload (the data needed to perform the action)
   function addExercise(exerciseData) {
+    //const newExercise = { ...exerciseData, id: Math.random().toString() }; // this will create a new exercise object with the new exercise data and a random id, we are using the spread operator to copy the exerciseData object and then we are adding the id property to it
     dispatch({ type: "ADD", payload: exerciseData }); // this will add a new exercise to the exercise array and the name(type,payload) is upto you
   }
   function setExercise(exercise) {
