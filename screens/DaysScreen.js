@@ -6,7 +6,11 @@ function DaysScreen() {
   const navigation = useNavigation();
   function renderCategoryItem(itemData) {
     function pressHandler() {
-      navigation.navigate("ExerciseScreen", { dayId: itemData.item.id });
+      if (itemData.item.id === "d7") {
+        navigation.navigate("RestplanScreen");
+      } else {
+        navigation.navigate("ExerciseScreen", { dayId: itemData.item.id });
+      }
     }
     return (
       <Daystiles

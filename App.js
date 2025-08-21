@@ -6,6 +6,8 @@ import DaysScreen from "./screens/DaysScreen";
 import ExerciseScreen from "./screens/ExerciseScreen";
 import IconButton from "./components/UI/IconButton";
 import ExercisesContextProvider from "./store/exercises-context";
+import RestplanScreen from "./screens/RestplanScreen";
+import ManageRestplanScreen from "./screens/ManageRestplanScreen";
 
 const Stack = createNativeStackNavigator();
 
@@ -47,6 +49,26 @@ export default function App() {
               component={ManageExerciseScreen}
               //options={{ presentation: "modal" }}
               // the presentation option is used to show the screen as a modal which only works on iOS
+            />
+            <Stack.Screen
+              name="RestplanScreen"
+              component={RestplanScreen}
+              options={({ navigation, route }) => ({
+                headerRight: ({ tintColor }) => (
+                  <IconButton
+                    icon="add"
+                    color={tintColor}
+                    size={24}
+                    onPress={() => {
+                      navigation.navigate("ManageRestplanScreen");
+                    }}
+                  />
+                ),
+              })}
+            />
+            <Stack.Screen
+              name="ManageRestplanScreen"
+              component={ManageRestplanScreen}
             />
           </Stack.Navigator>
         </NavigationContainer>
