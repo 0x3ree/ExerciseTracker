@@ -25,7 +25,7 @@ function ExerciseForm({
       value: defaultValues ? defaultValues.description : "",
       isValid: true,
     }, // we use the description from the defaultValues object if it exists, otherwise we set it to an empty string
-    // we ste the isValid to true so it doesn't show an error message when the form is first rendered, we will validate the input values when the user submits the form
+    // we set the isValid to true so it doesn't show an error message when the form is first rendered, we will validate the input values when the user submits the form
   });
 
   //in here the enteredValue is the value that is passed to the function when the text in the input field changes and is provided by react native automatically

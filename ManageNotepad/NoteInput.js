@@ -1,14 +1,20 @@
 import { View, Text, TextInput, StyleSheet } from "react-native";
 import { GlobalStyles } from "../constants/Styles";
 
-function NoteInput({ label, textInputConfig }) {
+function NoteInput({ label, style, invalid, textInputConfig }) {
   let inputStyles = [styles.input];
+
   if (textInputConfig && textInputConfig.multiline) {
     inputStyles.push(styles.noteInput);
   }
+  if (invalid) {
+    inputStyles.push(styles.invalidInput);
+  }
   return (
-    <View>
-      <Text style={styles.label}>{label}</Text>
+    <View style={[styles.inputContainer, style]}>
+      <Text style={[styles.label, invalid && styles.invalidLabel]}>
+        {label}
+      </Text>
       <TextInput style={inputStyles} {...textInputConfig} />
     </View>
   );
@@ -17,6 +23,10 @@ function NoteInput({ label, textInputConfig }) {
 export default NoteInput;
 
 const styles = StyleSheet.create({
+  inputContainer: {
+    marginHorizontal: 4,
+    marginVertical: 8,
+  },
   label: {
     fontSize: 16,
     fontWeight: "bold",
@@ -42,5 +52,11 @@ const styles = StyleSheet.create({
     backgroundColor: GlobalStyles.color.primary100,
     borderRadius: 8,
     overflow: "hidden",
+  },
+  invalidLabel: {
+    color: GlobalStyles.color.error500,
+  },
+  invalidInput: {
+    backgroundColor: GlobalStyles.color.error50,
   },
 });

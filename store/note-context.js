@@ -3,11 +3,11 @@ import { createContext, useReducer } from "react";
 
 export const NoteContext = createContext({
   note: [],
-  addNote: ({ title }) => {}, // in here we are using the object destructuring to get the values from the object
+  addNote: ({ title, description }) => {}, // in here we are using the object destructuring to get the values from the object
   // this is used to add a new exercise
   setNote: (note) => {}, // this is used to set the exercises array, we are not using it in this app but we can use it to set the exercises array from the firebase database
   deleteNote: ({ id }) => {}, // in here we expect the id of the exercise. this is used to delete an exercise
-  updateNote: (id, { title }) => {}, // in here we expect the id of the exercise and the new values of the exercise. this is used to update an expense
+  updateNote: (id, { title, description }) => {}, // in here we expect the id of the exercise and the new values of the exercise. this is used to update an expense
 });
 
 // this is the reducer function that will be used to update the exercises array
